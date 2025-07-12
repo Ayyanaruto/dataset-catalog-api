@@ -58,7 +58,6 @@ show_help() {
     echo ""
     echo "Examples:"
     echo "  $0 start                # Start in development mode"
-    echo "  $0 start-prod          # Start in production mode"
     echo "  $0 logs                # Show all logs"
     echo "  $0 clean               # Clean up everything"
 }
@@ -85,32 +84,10 @@ start_dev() {
     print_info "Use '$0 stop' to stop the application"
 }
 
-# Function to start production environment
-start_prod() {
-    print_info "Starting Dataset Catalog API in production mode..."
-    
-    # Check if SECRET_KEY is set
-    if [ -z "$SECRET_KEY" ]; then
-        print_warning "SECRET_KEY environment variable is not set."
-        print_warning "Using default key. Please set a secure SECRET_KEY for production!"
-    fi
-    
-    docker-compose -f docker-compose.prod.yml up -d
-    
-    print_success "Application started successfully in production mode!"
-    print_info "Services available at:"
-    print_info "  - API: http://localhost:5000"
-    print_info "  - API Documentation: http://localhost:5000/apidocs"
-    print_info ""
-    print_info "Use '$0 logs' to view logs"
-    print_info "Use '$0 stop' to stop the application"
-}
-
 # Function to stop the application
 stop_app() {
     print_info "Stopping Dataset Catalog API..."
     docker-compose down 2>/dev/null || true
-    docker-compose -f docker-compose.prod.yml down 2>/dev/null || true
     print_success "Application stopped successfully!"
 }
 
@@ -124,13 +101,13 @@ restart_app() {
 # Function to show logs
 show_logs() {
     print_info "Showing application logs (Press Ctrl+C to exit)..."
-    docker-compose logs -f 2>/dev/null || docker-compose -f docker-compose.prod.yml logs -f 2>/dev/null || print_error "No running containers found"
+    docker-compose logs -f 2>/dev/null ||print_error "No running containers found"
 }
 
 # Function to show container status
 show_status() {
     print_info "Container status:"
-    docker-compose ps 2>/dev/null || docker-compose -f docker-compose.prod.yml ps 2>/dev/null || print_error "No containers found"
+    docker-compose ps 2>/dev/null || print_error "No containers found"
 }
 
 # Function to clean up everything
@@ -141,7 +118,6 @@ clean_up() {
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         print_info "Cleaning up..."
         docker-compose down -v 2>/dev/null || true
-        docker-compose -f docker-compose.prod.yml down -v 2>/dev/null || true
         print_success "Cleanup completed!"
     else
         print_info "Cleanup cancelled."

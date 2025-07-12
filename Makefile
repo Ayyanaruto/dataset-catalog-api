@@ -1,10 +1,9 @@
-.PHONY: help start start-prod stop restart logs status clean build test test-service test-watch
+.PHONY: help start stop restart logs status clean build test test-service test-watch
 
 help:
 	@echo "Dataset Catalog API - Available Commands:"
 	@echo ""
 	@echo "  start       Start the application in development mode"
-	@echo "  start-prod  Start the application in production mode"
 	@echo "  stop        Stop the application"
 	@echo "  restart     Restart the application"
 	@echo "  logs        Show application logs"
@@ -28,7 +27,6 @@ start:
 stop:
 	@echo "Stopping Dataset Catalog API..."
 	docker-compose down 2>/dev/null || true
-	docker-compose -f docker-compose.prod.yml down 2>/dev/null || true
 	@echo "✅ Application stopped successfully!"
 
 restart: stop
@@ -37,18 +35,17 @@ restart: stop
 
 logs:
 	@echo "Showing application logs (Press Ctrl+C to exit)..."
-	docker-compose logs -f 2>/dev/null || docker-compose -f docker-compose.prod.yml logs -f 2>/dev/null
+	docker-compose logs -f 2>/dev/null
 
 status:
 	@echo "Container status:"
-	@docker-compose ps 2>/dev/null || docker-compose -f docker-compose.prod.yml ps 2>/dev/null || echo "No containers found"
+	@docker-compose ps 2>/dev/null || echo "No containers found"
 
 clean:
 	@echo "⚠️  This will stop and remove all containers, networks, and volumes!"
 	@read -p "Are you sure? (y/N): " confirm && [ "$$confirm" = "y" ] || exit 1
 	@echo "Cleaning up..."
 	docker-compose down -v 2>/dev/null || true
-	docker-compose -f docker-compose.prod.yml down -v 2>/dev/null || true
 	@echo "✅ Cleanup completed!"
 
 build:
