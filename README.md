@@ -1,6 +1,6 @@
 # Dataset Catalog API
 
-A lightweight backend API built with Python, Flask, and MongoDB for The API will be available at `http://localhost:5000`
+A lightweight backend API built with Python, Flask, and MongoDB for managing datasets and tracking quality logs.
 
 ## Docker Setup (Recommended)
 
@@ -80,7 +80,7 @@ make help                               # Show help
 
 ### API Documentation
 
-Once the application is running, visit `http://localhost:5000/apidocs` to view the interactive Swagger documentation.ing datasets and tracking quality logs.
+Once the application is running, visit `http://localhost:5000/apidocs` to view the interactive Swagger documentation.
 
 ## Features
 
@@ -102,7 +102,7 @@ Once the application is running, visit `http://localhost:5000/apidocs` to view t
 
 ## Project Structure
 
-\`\`\`
+```
 dataset-catalog-api/
 ├── app.py                 # Main Flask application
 ├── config.py             # Configuration settings
@@ -123,7 +123,7 @@ dataset-catalog-api/
 └── tests/               # Test files
     ├── test_datasets.py
     └── test_quality_logs.py
-\`\`\`
+```
 
 ## Setup Instructions
 
@@ -136,44 +136,44 @@ dataset-catalog-api/
 ### Installation
 
 1. **Clone the repository**
-   \`\`\`bash
-   git clone <repository-url>
+   ```bash
+   git clone https://github.com/Ayyanaruto/dataset-catalog-api.git
    cd dataset-catalog-api
-   \`\`\`
+   ```
 
 2. **Create a virtual environment**
-   \`\`\`bash
+   ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-   \`\`\`
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
 3. **Install dependencies**
-   \`\`\`bash
+   ```bash
    pip install -r requirements.txt
-   \`\`\`
+   ```
 
 4. **Set up environment variables** (optional)
-   Create a \`.env\` file in the root directory:
-   \`\`\`
+   Create a `.env` file in the root directory:
+   ```
    MONGODB_URI=mongodb://localhost:27017/
    MONGODB_DB=dataset_catalog
    SECRET_KEY=your-secret-key-here
    FLASK_DEBUG=True
-   \`\`\`
+   ```
 
 5. **Start MongoDB**
    Make sure MongoDB is running on your system or configure connection to MongoDB Atlas.
 
 6. **Run the application**
-   \`\`\`bash
+   ```bash
    python app.py
-   \`\`\`
+   ```
 
-The API will be available at \`http://localhost:5000\`
+The API will be available at `http://localhost:5000`
 
 ### API Documentation
 
-Once the application is running, visit \`http://localhost:5000/apidocs\` to view the interactive Swagger documentation.
+Once the application is running, visit `http://localhost:5000/apidocs` to view the interactive Swagger documentation.
 
 ## API Endpoints
 
@@ -181,94 +181,94 @@ Once the application is running, visit \`http://localhost:5000/apidocs\` to view
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | \`/datasets\` | Create a new dataset |
-| GET | \`/datasets\` | List all datasets (with filtering) |
-| GET | \`/datasets/<id>\` | Get dataset details |
-| PUT | \`/datasets/<id>\` | Update a dataset |
-| DELETE | \`/datasets/<id>\` | Soft delete a dataset |
-| GET | \`/datasets/stats\` | Get dataset statistics |
+| POST | `/datasets` | Create a new dataset |
+| GET | `/datasets` | List all datasets (with filtering) |
+| GET | `/datasets/<id>` | Get dataset details |
+| PUT | `/datasets/<id>` | Update a dataset |
+| DELETE | `/datasets/<id>` | Soft delete a dataset |
+| GET | `/datasets/stats` | Get dataset statistics |
 
 ### Quality Logs
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | \`/datasets/<id>/quality-logs\` | Add a quality log |
-| GET | \`/datasets/<id>/quality-logs\` | Get quality logs |
-| GET | \`/datasets/<id>/quality-summary\` | Get quality summary |
-| GET | \`/datasets/<id>/quality-status\` | Get latest quality status |
+| POST | `/datasets/<id>/quality-logs` | Add a quality log |
+| GET | `/datasets/<id>/quality-logs` | Get quality logs |
+| GET | `/datasets/<id>/quality-summary` | Get quality summary |
+| GET | `/datasets/<id>/quality-status` | Get latest quality status |
 
 ## Example API Requests
 
 ### Create a Dataset
 
-\`\`\`bash
-curl -X POST http://localhost:5000/datasets \\
-  -H "Content-Type: application/json" \\
+```bash
+curl -X POST http://localhost:5000/datasets \
+  -H "Content-Type: application/json" \
   -d '{
     "name": "Customer Data 2024",
     "owner": "john.doe",
     "description": "Customer dataset for 2024 analysis",
     "tags": ["customer", "2024", "analysis"]
   }'
-\`\`\`
+```
 
 ### Get All Datasets
 
-\`\`\`bash
+```bash
 curl http://localhost:5000/datasets
-\`\`\`
+```
 
 ### Filter Datasets by Owner
 
-\`\`\`bash
+```bash
 curl "http://localhost:5000/datasets?owner=john.doe&page=1&limit=10"
-\`\`\`
+```
 
 ### Get Dataset Details
 
-\`\`\`bash
+```bash
 curl http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0
-\`\`\`
+```
 
 ### Update a Dataset
 
-\`\`\`bash
-curl -X PUT http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0 \\
-  -H "Content-Type: application/json" \\
+```bash
+curl -X PUT http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0 \
+  -H "Content-Type: application/json" \
   -d '{
     "description": "Updated description",
     "tags": ["customer", "2024", "updated"]
   }'
-\`\`\`
+```
 
 ### Add Quality Log
 
-\`\`\`bash
-curl -X POST http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0/quality-logs \\
-  -H "Content-Type: application/json" \\
+```bash
+curl -X POST http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0/quality-logs \
+  -H "Content-Type: application/json" \
   -d '{
     "status": "PASS",
     "details": "All data quality checks passed successfully"
   }'
-\`\`\`
+```
 
 ### Get Quality Logs
 
-\`\`\`bash
+```bash
 curl http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0/quality-logs
-\`\`\`
+```
 
 ### Get Quality Summary
 
-\`\`\`bash
+```bash
 curl http://localhost:5000/datasets/64f8a1b2c3d4e5f6a7b8c9d0/quality-summary
-\`\`\`
+```
 
 ## Running Tests
 
 Run the test suite using pytest:
 
-\`\`\`bash
+```bash
 # Run all tests
 pytest
 
@@ -280,13 +280,13 @@ pytest tests/test_datasets.py
 
 # Run with coverage
 pytest --cov=.
-\`\`\`
+```
 
 ## Database Schema
 
 ### Datasets Collection
 
-\`\`\`json
+```json
 {
   "_id": "ObjectId",
   "name": "string",
@@ -297,11 +297,11 @@ pytest --cov=.
   "updated_at": "datetime",
   "is_deleted": "boolean"
 }
-\`\`\`
+```
 
 ### Quality Logs Collection
 
-\`\`\`json
+```json
 {
   "_id": "ObjectId",
   "dataset_id": "ObjectId",
@@ -309,32 +309,22 @@ pytest --cov=.
   "details": "string",
   "timestamp": "datetime"
 }
-\`\`\`
+```
 
 ## Error Handling
 
 The API returns standardized error responses:
 
-\`\`\`json
+```json
 {
   "error": "Error message description"
 }
-\`\`\`
+```
 
 Common HTTP status codes:
-- \`200\`: Success
-- \`201\`: Created
-- \`400\`: Bad Request (validation errors)
-- \`404\`: Not Found
-- \`409\`: Conflict (duplicate data)
-- \`500\`: Internal Server Error
-
-## Development
-
-### Adding New Features
-
-1. Create models in \`models/\` directory
-2. Implement business logic in \`services/\`
-3. Add route handlers in \`routes/\`
-4. Write tests in \`tests/\`
-5. Update API documentation
+- `200`: Success
+- `201`: Created
+- `400`: Bad Request (validation errors)
+- `404`: Not Found
+- `409`: Conflict (duplicate data)
+- `500`: Internal Server Error
