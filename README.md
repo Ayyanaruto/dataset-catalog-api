@@ -15,7 +15,7 @@ The easiest way to run the Dataset Catalog API is using Docker. This approach au
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Ayyanaruto/dataset-catalog-api.git
    cd dataset-catalog-api
    ```
 
